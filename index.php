@@ -7,9 +7,10 @@
 <h1>Hello Kitty</h1>
 <?php
 error_reporting(1);
-$link = mysql_connect('localhost:3306','root','123456');
+include 'settings.php';
+$link = mysql_connect(Settings::$dbUrl,Settings::$dbLogin,Settings::$dbPassword);
 if(!$link){
-	die ('MySql connection problem' .mysql_error(). '<br />');
+	die ('MySql connection problem: ' .mysql_error(). '<br />');
 }
 mysql_set_charset('utf8');
 mysql_select_db('kitties',$link);
