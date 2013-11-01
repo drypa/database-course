@@ -38,8 +38,7 @@ foreach ($result as $row){
 </table>
 <?php
 }
-
-mysql_close($link);
+$dalc->__destruct();
 ?>
 </body>
 </html>

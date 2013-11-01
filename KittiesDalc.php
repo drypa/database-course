@@ -23,5 +23,8 @@ require_once 'settings.php';
 
              return $kitties;
         }
+        public function __destruct(){
+        mysql_close($connection);
+        }
     }
 ?>
