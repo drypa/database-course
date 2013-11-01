@@ -5,10 +5,10 @@
         public function KittiesHandler(){
             $dalc = new KittiesDalc();
         }
-        public GetKitties(){
+        public function GetKitties(){
             return $dalc->SelectKitties();
         }
-        public AddKitty($name,$birthDate,$sex,$breedId,$toiletTrained){
+        public function AddKitty($name,$birthDate,$sex,$breedId,$toiletTrained){
             $dalc->AddKitty($name,$birthDate,$sex,$breedId,$toiletTrained);
         }
 
@@ -19,8 +19,15 @@
             $dalc->SelectBreeds();
         }
 
-        public __destruct(){
+        public function __destruct(){
            $dalc->__destruct();
         }
     }
+
+ if (isset($_POST['addKitty'])){
+        die('kitties add is not implemented');
+ }
+ if (isset($_POST['addBreed'])){
+    die('breed add is not implemented');
+ }
 ?>
