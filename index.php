@@ -8,7 +8,7 @@
 <h1>Hello Kitty</h1>
 <?php
 error_reporting(1);
-require_once 'KittiesDalc.php';
+require_once 'kitties_dalc.php';
 
 $dalc = new KittiesDalc();
 
@@ -31,7 +31,15 @@ if(count($result)<=0){
 <tbody>
 <?php
 foreach ($result as $row){
-	 echo '<tr><td>'.$row['id'].'</td><td>'.$row['name'].'</td><td>'.$row['birth_date'].'</td><td>'.$row['breed'].'</td></tr>';
+	 echo '<tr><td>'
+	     .$row['id']
+	     .'</td><td>'
+	     .$row['name']
+	     .'</td><td>'
+	     .$row['birth_date']
+	     .'</td><td>'
+	     .$row['breed']
+	     .'</td></tr>';
 }
 ?>
 </tbody>

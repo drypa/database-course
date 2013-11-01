@@ -23,8 +23,17 @@ require_once 'settings.php';
 
              return $kitties;
         }
+        public function AddKitty($name,$birthDate,$sex,$breedId,$toiletTrained){
+
+        }
+        public function AddBreed($name){
+
+        }
+        public function SelectBreeds(){
+
+        }
         public function __destruct(){
-        mysql_close($connection);
+            mysql_close($connection);
         }
     }
 ?>
