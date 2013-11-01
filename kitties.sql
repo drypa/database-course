@@ -1,13 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.8
+-- version 3.5.8.1
 -- http://www.phpmyadmin.net
 --
--- Хост: localhost:3306
--- Время создания: Окт 26 2013 г., 11:25
--- Версия сервера: 5.5.32
--- Версия PHP: 5.4.20
+-- Хост: 127.0.0.1
+-- Время создания: Ноя 01 2013 г., 09:41
+-- Версия сервера: 5.6.11-log
+-- Версия PHP: 5.4.14
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 
@@ -24,13 +24,13 @@ DELIMITER $$
 --
 -- Процедуры
 --
-CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_kitty`(IN `name` VARCHAR(255) CHARSET cp1251, IN `birth_date` DATE, IN `breed_id` INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_kitty`(IN `name` VARCHAR(255) CHARSET cp1251, IN `birth_date` DATE, IN `breed_id` INT, IN `sex` BIT(1), IN `toilet_trained` BIT(1))
     NO SQL
-insert into kitties (name,birth_date,breed_id) values (name,birth_date,breed_id)$$
+insert into kitties (name,birth_date,sex,toilet_trained,breed_id) values (name,birth_date,sex,toilet_trained,breed_id)$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `select_kitties_with_breed`()
     NO SQL
-SELECT k.id,k.name,k.birth_date, b.name as breed 
+SELECT k.id,k.name,k.birth_date,k.sex,k.toilet_trained, b.name as breed 
 FROM kitties AS k
 INNER JOIN breeds AS b ON b.id = k.breed_id$$
 
@@ -90,6 +90,8 @@ CREATE TABLE IF NOT EXISTS `kitties` (
   `name` varchar(255) NOT NULL,
   `breed_id` int(11) NOT NULL,
   `birth_date` date NOT NULL,
+  `toilet_trained` bit(1) NOT NULL,
+  `sex` bit(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `breed_id` (`breed_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=cp1251 AUTO_INCREMENT=4 ;
@@ -98,10 +100,10 @@ CREATE TABLE IF NOT EXISTS `kitties` (
 -- Дамп данных таблицы `kitties`
 --
 
-INSERT INTO `kitties` (`id`, `name`, `breed_id`, `birth_date`) VALUES
-(1, 'Мурзик', 1, '2013-10-02'),
-(2, 'Барсик', 2, '2013-09-04'),
-(3, 'Борис', 1, '2013-08-01');
+INSERT INTO `kitties` (`id`, `name`, `breed_id`, `birth_date`, `toilet_trained`, `sex`) VALUES
+(1, 'Мурзик', 1, '2013-10-02', b'0', b'0'),
+(2, 'Барсик', 2, '2013-09-04', b'0', b'0'),
+(3, 'Борис', 1, '2013-08-01', b'0', b'0');
 
 -- --------------------------------------------------------
 
