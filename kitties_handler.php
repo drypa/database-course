@@ -3,24 +3,24 @@
     class KittiesHandler{
         private $dalc;
         public function KittiesHandler(){
-            $dalc = new KittiesDalc();
+            $this->dalc = new KittiesDalc();
         }
         public function GetKitties(){
-            return $dalc->SelectKitties();
+            return $this->dalc->SelectKitties();
         }
         public function AddKitty($name,$birthDate,$sex,$breedId,$toiletTrained){
-            $dalc->AddKitty($name,$birthDate,$sex,$breedId,$toiletTrained);
+            $this->dalc->AddKitty($name,$birthDate,$sex,$breedId,$toiletTrained);
         }
 
         public function AddBreed($name){
-            $dalc->AddBreed($name);
+            $this->dalc->AddBreed($name);
         }
-        public function SelectBreeds(){
-            $dalc->SelectBreeds();
+        public function GetBreeds(){
+            return $this->dalc->SelectBreeds();
         }
 
         public function __destruct(){
-           $dalc->__destruct();
+           $this->dalc->__destruct();
         }
     }
 

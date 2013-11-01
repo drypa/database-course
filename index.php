@@ -7,12 +7,12 @@
 <body>
 <h1>Hello Kitty</h1>
 <?php
-error_reporting(1);
-require_once 'kitties_dalc.php';
+error_reporting(-1);
+require_once 'kitties_handler.php';
 
-$dalc = new KittiesDalc();
+$handler = new KittiesHandler();
 
-$result = $dalc->SelectKitties();
+$result = $handler->GetKitties();
 if(count($result)<=0){
 ?>
 <div>No kitties found</div>
@@ -44,7 +44,9 @@ foreach ($result as $row){
 ?>
 </tbody>
 </table>
-
+<?php
+}
+?>
 <div>
     <div>Add Kitty</div>
     <form action='kitties_handler.php' method='POST'>
@@ -62,6 +64,18 @@ foreach ($result as $row){
                 <td><label for='sex'>Sex</label></td>
                 <td><input type='radio' name='sex' value='male'>Male</input> <input type='radio' name='sex' value='female' >Female</input></td>
                 </tr>
+                <tr>
+                <td><label for='breed'>Breed</label></td>
+                <td><select type='select' name='breed' >
+                    <?php
+                        $breeds = $handler->GetBreeds();
+                        var_dump($breeds);
+                        foreach($breeds as $el){
+                            echo '<option value="'.$el['id'].'">'.$el['name'].'</option>';
+                        }
+                    ?>
+                </select> </td>
+                </tr>
                 <td><label for='toilet'>Toilet Trained</label></td>
                 <td><input type='checkbox' name='toilet'></input> </td>
                 </tr>
@@ -73,10 +87,8 @@ foreach ($result as $row){
             </tbody>
         </table>
     </form>
-</div>
-<?php
-}
-$dalc->__destruct();
-?>
 </body>
 </html>
+<?php
+$handler->__destruct();
+?>
