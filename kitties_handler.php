@@ -74,10 +74,9 @@ if (isset($_POST['addKitty'])) {
     $toilet = $_POST['toilet'] == 'on' ? 1 : 0;
     $breed = $_POST['breed'];
     $id = $handler->AddKitty($name, $birthDate, (int)$sex, (int)$breed, (int)$toilet);
-    $i = 1;
-    while ($_POST['color' . $i]) {
-        $handler->AddKittyColor($id, $_POST['color' . $i]);
-        ++$i;
+    foreach ($_POST['color'] as $key => $value) {
+        $handler->AddKittyColor($id, $value);
+
     }
 
     $handler->__destruct();
