@@ -28,6 +28,7 @@ if (count($result) <= 0) {
         <th>Breed</th>
         <th>Sex</th>
         <th>Toilet trained</th>
+        <th>Colors</th>
         <th>Actions</th>
     </tr>
     </thead>
@@ -46,6 +47,8 @@ if (count($result) <= 0) {
                 . ($row['sex'] == '1' ? 'Male' : 'Female')
                 . '</td><td>'
                 . ($row['toilet_trained'] == '1' ? 'Trained' : 'Not trained =(')
+                . '</td><td>'
+                . $row['colors']
                 . '</td><td>'
                 . '<form method="POST" action=kitties_handler.php><input type="hidden" name="kittyId" value="' . $row['id'] .
                 '" /><input type="submit" name="delKitty" value="To adopt" /></form>'
@@ -72,8 +75,10 @@ if (count($result) <= 0) {
             </tr>
             <tr>
                 <td><label></label>Sex</label></td>
-                <td><input type='radio' name='sex' value='1'>Male</input>
-                    <input type='radio' name='sex' value='0'>Female</input></td>
+                <td>
+                    <input type='radio' name='sex' value='1'>Male</input>
+                    <input type='radio' name='sex' value='0'>Female</input>
+                </td>
             </tr>
             <tr>
                 <td><label>Breed</label></td>
@@ -87,6 +92,7 @@ if (count($result) <= 0) {
                     ?>
                 </select></td>
             </tr>
+            <tr>
             <td><label>Toilet Trained</label></td>
             <td><input type='checkbox' name='toilet'/></td>
             </tr>

@@ -33,6 +33,40 @@ require_once 'settings.php';
             $query = 'DELETE FROM `kitties` WHERE `id` = '.$id;
             return mysql_query($query);
         }
+        public function SelectColorsForKitty($id){
+            $query = 'SELECT c.name FROM `kitties` as k
+                        join `kitties_colors` as kc
+                        on k.id = kc.kitty_id
+                        join colors as c
+                        on c.id = kc.color_id
+                        where k.id= '.$id;
+            $result = mysql_query($query);
+            if(!$result){
+                die(mysql_error());
+            }
+            $colors = array();
+            while($row = mysql_fetch_array($result)){
+                if($row['name']){
+                    array_push($colors,$row['name']);
+                }
+            }
+            mysql_free_result($result);
+            return $colors;
+        }
+
+        public function SelectColors(){
+            $query = 'SELECT name from `colors`';
+            $result = mysql_query($query);
+            if(!$result){
+                die(mysql_error());
+            }
+            $colors = array();
+            while($row = mysql_fetch_array($result)){
+                array_push($colors,$row['name']);
+            }
+            mysql_free_result($result);
+            return $colors;
+        }
 
 
         public function AddBreed($name){

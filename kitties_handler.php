@@ -6,20 +6,29 @@
             $this->dalc = new KittiesDalc();
         }
         public function GetKitties(){
-            return $this->dalc->SelectKitties();
+            $kitties = $this->dalc->SelectKitties();
+            for($i = 0; $i < count($kitties); $i++){
+                $colors = $this->dalc->SelectColorsForKitty($kitties[$i]['id']);
+                $colorsString = join(',',$colors);
+                $kitties[$i]['colors'] = $colorsString;
+            }
+            return $kitties;
         }
         public function AddKitty($name,$birthDate,$sex,$breedId,$toiletTrained){
-            $this->dalc->AddKitty($name,$birthDate,$sex,$breedId,$toiletTrained);
+            return $this->dalc->AddKitty($name,$birthDate,$sex,$breedId,$toiletTrained);
         }
 
         public function AddBreed($name){
-            $this->dalc->AddBreed($name);
+            return $this->dalc->AddBreed($name);
         }
         public function GetBreeds(){
             return $this->dalc->SelectBreeds();
         }
         public function DeleteKitty($id){
             $this->dalc->DeleteKitty($id);
+        }
+        public function GetKittyColors($id){
+            return $this->dalc->SelectColorsForKitty($id);
         }
 
         public function __destruct(){
