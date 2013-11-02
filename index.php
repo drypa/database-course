@@ -122,6 +122,23 @@ if (count($result) <= 0) {
         </table>
     </form>
 </div>
+<div>
+    <div>Add Color</div>
+    <form action='kitties_handler.php' method='POST'>
+        <table>
+            <tbody>
+            <tr>
+                <td><label>Color</label></td>
+                <td><input type='text' name='colorName'/></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type='submit' name='addColor' value='Add color'/></td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
 </body>
 </html>
 <?php

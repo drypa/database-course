@@ -21,8 +21,15 @@
         public function AddBreed($name){
             return $this->dalc->AddBreed($name);
         }
+
+        public function AddColor($name){
+            return $this->dalc->AddColor($name);
+        }
         public function GetBreeds(){
             return $this->dalc->SelectBreeds();
+        }
+        public function GetColors(){
+            return $this->dalc->SelectColors();
         }
         public function DeleteKitty($id){
             $this->dalc->DeleteKitty($id);
@@ -57,6 +64,7 @@ if (isset($_POST['delKitty'])){
     header("Location: index.php");
     return;
 }
+
  if (isset($_POST['addBreed'])){
      $name = $_POST['breedName'];
      $handler = new KittiesHandler();
@@ -64,4 +72,11 @@ if (isset($_POST['delKitty'])){
      header("Location: index.php");
      return;
  }
+if (isset($_POST['addColor'])){
+    $name = $_POST['colorName'];
+    $handler = new KittiesHandler();
+    $handler->AddColor($name);
+    header("Location: index.php");
+    return;
+}
 ?>

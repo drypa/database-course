@@ -62,7 +62,9 @@ require_once 'settings.php';
             }
             $colors = array();
             while($row = mysql_fetch_array($result)){
-                array_push($colors,$row['name']);
+                if($row['name']){
+                    array_push($colors,$row['name']);
+                }
             }
             mysql_free_result($result);
             return $colors;
@@ -89,6 +91,12 @@ require_once 'settings.php';
         }
         public function __destruct(){
             mysql_close($this->connection);
+        }
+
+        public function AddColor($name)
+        {
+            $query = 'INSERT INTO `colors` ( `name` ) values("'.$name.'")';
+            return mysql_query($query);
         }
     }
 ?>
