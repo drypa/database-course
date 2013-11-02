@@ -93,6 +93,17 @@ if (count($result) <= 0) {
                 </select></td>
             </tr>
             <tr>
+                <td><label>Colors</label></td>
+                <td>
+                    <?php
+                        $colors = $handler->GetColors();
+                        foreach ($colors as $el) {
+                            echo '<label><input type="checkbox" name="color'.$el['id'].'" value=" '. $el['id'] . '" />'. $el['name'].'</label>';
+                        }
+                    ?>
+                </td>
+            </tr>
+            <tr>
             <td><label>Toilet Trained</label></td>
             <td><input type='checkbox' name='toilet'/></td>
             </tr>
