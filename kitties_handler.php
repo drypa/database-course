@@ -25,7 +25,17 @@
     }
 
  if (isset($_POST['addKitty'])){
-        die('kitties add is not implemented');
+     $handler = new KittiesHandler();
+     $name = $_POST['kittyName'];
+     $birthDate = $_POST['birthDate'];
+     $sex = $_POST['sex'];
+     $toilet = $_POST['toilet'] =='on' ? 1 : 0;
+     $breed = $_POST['breed'];
+     $handler->AddKitty($name,$birthDate,(int)$sex,(int)$breed,(int)$toilet);
+     $handler->__destruct();
+     header("Location: index.php");
+
+     return;
  }
  if (isset($_POST['addBreed'])){
     die('breed add is not implemented');

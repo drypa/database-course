@@ -13,7 +13,6 @@ require_once 'settings.php';
         }
         public function SelectKitties(){
             $result = mysql_query('SELECT k.id,k.name,k.birth_date,k.sex,k.toilet_trained, b.name as breed FROM kitties AS k INNER JOIN breeds AS b ON b.id = k.breed_id',$this->connection);
-//            mysql_store_result($connection);
             if(!$result){
                 die(mysql_error());
             }
@@ -21,12 +20,14 @@ require_once 'settings.php';
             while($row = mysql_fetch_array($result)){
                 array_push($kitties,$row);
             }
-            // var_dump($result);
             mysql_free_result($result);
             return $kitties;
         }
         public function AddKitty($name,$birthDate,$sex,$breedId,$toiletTrained){
+            $query = 'INSERT INTO `kitties` (`name`,`birth_date`,`sex`,`breed_id`,`toilet_trained`) VALUES("'
+                .$name.'","'.$birthDate.'",'.$sex.','.$breedId.','.$toiletTrained.')';
 
+            mysql_query($query);
         }
         public function AddBreed($name){
 
