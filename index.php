@@ -43,14 +43,13 @@ if (count($result) <= 0) {
                 . '</td><td>'
                 . $row['breed']
                 . '</td><td>'
-                .($row['sex'] == '1' ? 'Male' : 'Female')
+                . ($row['sex'] == '1' ? 'Male' : 'Female')
                 . '</td><td>'
-                .($row['toilet_trained'] == '1' ? 'Trained' : 'Not trained =(')
-                .'</td><td>'
-                .'<form method="POST" action=kitties_handler.php><input type="hidden" name="kittyId" value="'.$row['id'].
+                . ($row['toilet_trained'] == '1' ? 'Trained' : 'Not trained =(')
+                . '</td><td>'
+                . '<form method="POST" action=kitties_handler.php><input type="hidden" name="kittyId" value="' . $row['id'] .
                 '" /><input type="submit" name="delKitty" value="To adopt" /></form>'
-                .'</td></tr>'
-            ;
+                . '</td></tr>';
         }
         ?>
     </tbody>
@@ -89,16 +88,17 @@ if (count($result) <= 0) {
                 </select></td>
             </tr>
             <td><label>Toilet Trained</label></td>
-            <td><input type='checkbox' name='toilet' /></td>
+            <td><input type='checkbox' name='toilet'/></td>
             </tr>
             <tr>
                 <td></td>
-                <td><input type='submit' name='addKitty' value='Add kitty' /></td>
+                <td><input type='submit' name='addKitty' value='Add kitty'/></td>
             </tr>
             <tr>
             </tbody>
         </table>
     </form>
+</div>
 </body>
 </html>
 <?php
