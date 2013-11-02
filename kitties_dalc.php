@@ -27,8 +27,14 @@ require_once 'settings.php';
             $query = 'INSERT INTO `kitties` (`name`,`birth_date`,`sex`,`breed_id`,`toilet_trained`) VALUES("'
                 .$name.'","'.$birthDate.'",'.$sex.','.$breedId.','.$toiletTrained.')';
 
-            mysql_query($query);
+            return mysql_query($query);
         }
+        public function DeleteKitty($id){
+            $query = 'DELETE FROM `kitties` WHERE `id` = '.$id;
+            return mysql_query($query);
+        }
+
+
         public function AddBreed($name){
 
         }

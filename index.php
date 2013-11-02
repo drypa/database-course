@@ -28,6 +28,7 @@ if (count($result) <= 0) {
         <th>Breed</th>
         <th>Sex</th>
         <th>Toilet trained</th>
+        <th>Actions</th>
     </tr>
     </thead>
     <tbody>
@@ -45,6 +46,9 @@ if (count($result) <= 0) {
                 .($row['sex'] == '1' ? 'Male' : 'Female')
                 . '</td><td>'
                 .($row['toilet_trained'] == '1' ? 'Trained' : 'Not trained =(')
+                .'</td><td>'
+                .'<form method="POST" action=kitties_handler.php><input type="hidden" name="kittyId" value="'.$row['id'].
+                '" /><input type="submit" name="delKitty" value="To adopt" /></form>'
                 .'</td></tr>'
             ;
         }
