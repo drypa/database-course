@@ -19,7 +19,7 @@ if (count($result) <= 0) {
     <?php
 } else {
     ?>
-<table>
+<table class='kitties-list'>
     <thead>
     <tr>
         <th>Id</th>
@@ -57,8 +57,8 @@ if (count($result) <= 0) {
     <?php
 }
 ?>
-<div>
-    <div>Add Kitty</div>
+<div class='add-kitty'>
+    <div class='title'>Add Kitty</div>
     <form action='kitties_handler.php' method='POST'>
         <table>
             <tbody>
@@ -95,6 +95,23 @@ if (count($result) <= 0) {
                 <td><input type='submit' name='addKitty' value='Add kitty'/></td>
             </tr>
             <tr>
+            </tbody>
+        </table>
+    </form>
+</div>
+<div>
+    <div>Add Breed</div>
+    <form action='kitties_handler.php' method='POST'>
+        <table>
+            <tbody>
+            <tr>
+                <td><label>Breed name</label></td>
+                <td><input type='text' name='breedName'/></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type='submit' name='addBreed' value='Add breed'/></td>
+            </tr>
             </tbody>
         </table>
     </form>

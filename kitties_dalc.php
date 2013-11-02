@@ -36,7 +36,8 @@ require_once 'settings.php';
 
 
         public function AddBreed($name){
-
+            $query = 'INSERT INTO `breeds` ( `name` ) values("'.$name.'")';
+            return mysql_query($query);
         }
         public function SelectBreeds(){
              $result = mysql_query('select * from breeds',$this->connection);

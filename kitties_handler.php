@@ -49,6 +49,10 @@ if (isset($_POST['delKitty'])){
     return;
 }
  if (isset($_POST['addBreed'])){
-    die('breed add is not implemented');
+     $name = $_POST['breedName'];
+     $handler = new KittiesHandler();
+     $handler->AddBreed($name);
+     header("Location: index.php");
+     return;
  }
 ?>
