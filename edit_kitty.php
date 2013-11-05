@@ -16,6 +16,7 @@ if(isset($_GET['id'])){
     ?>
 <div class='edit-kitty'>
     <form action='kitties_handler.php' method='POST'>
+        <input type='hidden' name='kittyId' value="<?php echo($kitty['id']); ?>"/>
         <table>
             <tbody>
             <tr>
@@ -29,8 +30,8 @@ if(isset($_GET['id'])){
             <tr>
                 <td><label></label>Sex</label></td>
                 <td>
-                    <input type='radio' name='sex' value='1' <?php echo($kitty['sex'] ==1 ? " checked='checked'": "" ); ?>'>Male</input>
-                    <input type='radio' name='sex' value='0' <?php echo($kitty['sex'] ==0 ? " checked='checked'": "" ); ?>'>Female</input>
+                    <input type='radio' name='sex' value='1' <?php echo($kitty['sex'] ==1 ? " checked='checked'": "" ); ?> >Male</input>
+                    <input type='radio' name='sex' value='0' <?php echo($kitty['sex'] ==0 ? " checked='checked'": "" ); ?> >Female</input>
                 </td>
             </tr>
             <tr>
@@ -55,25 +56,30 @@ if(isset($_GET['id'])){
                     <?php
                     $colors = $handler->GetColors();
                     foreach ($colors as $el) {
-                        echo '<label><input type="checkbox" name="color[]" value=" '. $el['id'] . '" />'. $el['name'].'</label>';
+                        if(in_array ($el['id'],$kitty['color_id'])){
+                            echo '<label><input type="checkbox" checked="checked" name="color[]" value=" '. $el['id'] . '" />'. $el['name'].'</label>';
+                        }else{
+                            echo '<label><input type="checkbox" name="color[]" value=" '. $el['id'] . '" />'. $el['name'].'</label>';
+                        }
+
                     }
                     ?>
                 </td>
             </tr>
             <tr>
                 <td><label>Toilet Trained</label></td>
-                <td><input type='checkbox' name='toilet' /></td>
+                <td><input type='checkbox' name='toilet' <?php echo($kitty['toilet_trained'] ==1 ? " checked='checked'": "" ); ?> /></td>
             </tr>
             <tr>
                 <td></td>
-                <td><input type='submit' name='addKitty' value='Update kitty'/></td>
+                <td><input type='submit' name='updateKitty' value='Update kitty'/></td>
             </tr>
             <tr>
             </tbody>
         </table>
     </form>
 </div>
-
+<div><a href="index.php">Back </a> </div>
 
 </body>
 </html>

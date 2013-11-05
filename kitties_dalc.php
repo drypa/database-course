@@ -71,6 +71,24 @@ require_once 'settings.php';
             mysql_free_result($result);
             return $colors;
         }
+        public function SelectColorsIdForKitty($id){
+            $query = 'SELECT kc.color_id as color_id FROM `kitties` as k
+                        join `kitties_colors` as kc
+                        on k.id = kc.kitty_id
+                        where k.id= '.$id;
+            $result = mysql_query($query);
+            if(!$result){
+                die(mysql_error());
+            }
+            $colors = array();
+            while($row = mysql_fetch_array($result)){
+                if($row['color_id']){
+                    array_push($colors,$row['color_id']);
+                }
+            }
+            mysql_free_result($result);
+            return $colors;
+        }
 
         public function SelectColors(){
             $query = 'SELECT id,name from `colors`';
@@ -119,6 +137,23 @@ require_once 'settings.php';
         {
             $query = 'INSERT INTO `kitties_colors` (`kitty_id`, `color_id`) SELECT '.$id.', '.$color.'
             FROM dual WHERE not exists (SELECT * FROM `kitties_colors` WHERE `kitty_id` = '.$id.' AND `color_id` = '.$color.' )';
+            return mysql_query($query);
+        }
+
+        public function UpdateKitty($id, $name, $birthDate, $sex, $breed, $toilet)
+        {
+            $query = 'UPDATE `kitties` set
+            `name`="'.$name.'",
+            `birth_date`="'.$birthDate.'",
+            `toilet_trained`='.$toilet.',
+            `breed_id`='.$breed.',
+            `sex`='.$sex.' where `id`="'.$id.'" ';
+            return mysql_query($query);
+        }
+
+        public function DeleteColorsForKitty($id)
+        {
+            $query = 'DELETE FROM `kitties_colors` WHERE `kitty_id` = '.$id;
             return mysql_query($query);
         }
     }

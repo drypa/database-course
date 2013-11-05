@@ -21,10 +21,9 @@ class KittiesHandler
     }
     public function GetKitty($id){
        $kitty = $this->dalc->SelectKitty($id);
-       $colors = $this->dalc->SelectColorsForKitty($id);
-       $colorsString = join(',', $colors);
-        $kitty['colors'] = $colorsString;
-        return $kitty;
+       $colors = $this->dalc->SelectColorsIdForKitty($id);
+       $kitty['color_id'] = $colors;
+       return $kitty;
     }
 
     public function AddKitty($name, $birthDate, $sex, $breedId, $toiletTrained)
@@ -71,6 +70,15 @@ class KittiesHandler
     {
         return $this->dalc->AddKittyColor($id, $color);
     }
+
+    public function UpdateKitty($id, $name, $birthDate, $sex, $breed, $toilet)
+    {
+        return $this->dalc->UpdateKitty($id, $name, $birthDate, $sex, $breed, $toilet);
+    }
+    public function DeleteColorsForKitty($id)
+    {
+        return $this->dalc->DeleteColorsForKitty($id);
+    }
 }
 
 if (isset($_POST['addKitty'])) {
@@ -91,6 +99,28 @@ if (isset($_POST['addKitty'])) {
 
     return;
 }
+if (isset($_POST['updateKitty'])) {
+    $handler = new KittiesHandler();
+    $name = $_POST['kittyName'];
+    $id = $_POST['kittyId'];
+    $birthDate = $_POST['birthDate'];
+    $sex = $_POST['sex'];
+    $toilet = $_POST['toilet'] == 'on' ? 1 : 0;
+    $breed = $_POST['breed'];
+    $handler->UpdateKitty($id, $name, $birthDate, (int)$sex, (int)$breed, (int)$toilet);
+    $handler->DeleteColorsForKitty($id);
+    foreach ($_POST['color'] as $key => $value) {
+        $handler->AddKittyColor($id, $value);
+
+    }
+
+    $handler->__destruct();
+    header("Location: index.php");
+
+    return;
+}
+
+
 if (isset($_POST['delKitty'])) {
     $handler = new KittiesHandler();
     $id = $_POST['kittyId'];
