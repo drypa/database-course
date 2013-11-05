@@ -19,6 +19,13 @@ class KittiesHandler
         }
         return $kitties;
     }
+    public function GetKitty($id){
+       $kitty = $this->dalc->SelectKitty($id);
+       $colors = $this->dalc->SelectColorsForKitty($id);
+       $colorsString = join(',', $colors);
+        $kitty['colors'] = $colorsString;
+        return $kitty;
+    }
 
     public function AddKitty($name, $birthDate, $sex, $breedId, $toiletTrained)
     {

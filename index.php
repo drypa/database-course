@@ -51,7 +51,7 @@ if (count($result) <= 0) {
                 . $row['colors']
                 . '</td><td>'
                 . '<form method="POST" action=kitties_handler.php><input type="hidden" name="kittyId" value="' . $row['id'] .
-                '" /><input type="submit" name="delKitty" value="To adopt" /></form>'
+                '" /><input type="submit" name="delKitty" value="To adopt" /></form> <a href="edit_kitty.php?id='.$row['id'].'">Edit</a>'
                 . '</td></tr>';
         }
         ?>
