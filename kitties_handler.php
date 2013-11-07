@@ -9,9 +9,9 @@ class KittiesHandler
         $this->dalc = new KittiesDalc();
     }
 
-    public function GetKitties()
+    public function GetKitties($order,$name, $startDate, $endDate, $breed)
     {
-        $kitties = $this->dalc->SelectKitties();
+        $kitties = $this->dalc->SelectKitties($order,$name, $startDate, $endDate, $breed);
         for ($i = 0; $i < count($kitties); $i++) {
             $colors = $this->dalc->SelectColorsForKitty($kitties[$i]['id']);
             $colorsString = join(',', $colors);
@@ -78,6 +78,9 @@ class KittiesHandler
     public function DeleteColorsForKitty($id)
     {
         return $this->dalc->DeleteColorsForKitty($id);
+    }
+    public function SearchKitty($name,$startDate,$endDate,$breed,$order){
+        return $this->dalc->SearchKitty($name,$startDate,$endDate,$breed,$order);
     }
 }
 

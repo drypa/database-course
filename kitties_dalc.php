@@ -10,9 +10,11 @@ require_once 'settings.php';
             mysql_select_db(Settings::$dbName,$this->connection);
 
             mysql_set_charset('utf8');
+            //mysql_query("SET NAMES 'utf8';");
         }
-        public function SelectKitties(){
-            $result = mysql_query('SELECT k.id,k.name,k.birth_date,k.sex,k.toilet_trained, b.name as breed FROM kitties AS k INNER JOIN breeds AS b ON b.id = k.breed_id order by k.id',$this->connection);
+        public function SelectKitties($order='k.id',$name=null, $startDate=null, $endDate=null, $breed=null){
+            $query = $this->BuildQueryToSearchKitty($order,$name,$startDate,$endDate,$breed);
+            $result = mysql_query($query,$this->connection);
             if(!$result){
                 die(mysql_error());
             }
@@ -155,6 +157,47 @@ require_once 'settings.php';
         {
             $query = 'DELETE FROM `kitties_colors` WHERE `kitty_id` = '.$id;
             return mysql_query($query);
+        }
+        private function BuildQueryToSearchKitty($order=null,$name=null, $startDate=null, $endDate=null, $breed=null){
+            $query = " SELECT k.id,
+                             k.name,
+                             k.birth_date,
+                             k.sex,
+                             k.toilet_trained,
+                             b.name as breed
+                             FROM kitties AS k
+                             INNER JOIN breeds AS b ON
+                             b.id = k.breed_id";
+            if($name || $startDate || $endDate || $breed){
+                 $query.=' where ';
+            }
+            if($name){
+                $query.=" k.name like '%".$name."%'";
+            }
+            if($startDate){
+                if($name){
+                    $query.=' and ';
+                }
+                $query.=" k.birth_date >= '".$startDate."'";
+            }
+            if($endDate){
+                if($name || $startDate){
+                    $query.=' and ';
+                }
+                $query.=" k.birth_date <= '".$endDate."'";
+            }
+            if($breed){
+                if($name || $startDate || $endDate){
+                    $query.=' and ';
+                }
+                $query.=(' b.id ='.$breed);
+            }
+
+            if($order){
+                $query.=(' order by '.$order);
+            }
+            //die($query);
+            return $query;
         }
     }
 ?>

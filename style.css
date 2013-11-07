@@ -8,3 +8,11 @@
     font-weight: bold;
     background-color: #90dddd;
 }
+.search-results{
+    background-color: #fff8dc;
+}
+
+.order-settings label{
+border: 1px dotted #aaa;
+    margin-left: 10px;
+}
