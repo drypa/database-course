@@ -6,6 +6,9 @@
 </head>
 <body>
 <h1>Hello Kitty</h1>
+<ul>
+    <li><a href='index.php'>Back to main page</a></li>
+</ul>
 <?php
 error_reporting(-1);
 require_once 'kitties_handler.php';
