@@ -82,6 +82,11 @@ class KittiesHandler
     public function SearchKitty($name,$startDate,$endDate,$breed,$order){
         return $this->dalc->SearchKitty($name,$startDate,$endDate,$breed,$order);
     }
+
+    public function AddFood($name)
+    {
+        return $this->dalc->AddFood($name);
+    }
 }
 
 if (isset($_POST['addKitty'])) {
@@ -144,6 +149,13 @@ if (isset($_POST['addColor'])) {
     $name = $_POST['colorName'];
     $handler = new KittiesHandler();
     $handler->AddColor($name);
+    header("Location: index.php");
+    return;
+}
+if (isset($_POST['addFood'])) {
+    $name = $_POST['foodName'];
+    $handler = new KittiesHandler();
+    $handler->AddFood($name);
     header("Location: index.php");
     return;
 }

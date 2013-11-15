@@ -153,6 +153,23 @@ if (count($result) <= 0) {
         </table>
     </form>
 </div>
+<div>
+    <div>Add Food</div>
+    <form action='kitties_handler.php' method='POST'>
+        <table>
+            <tbody>
+            <tr>
+                <td><label>Food</label></td>
+                <td><input type='text' name='foodName'/></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type='submit' name='addFood' value='Add food'/></td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
 </body>
 </html>
 <?php

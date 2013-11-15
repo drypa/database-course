@@ -199,5 +199,11 @@ require_once 'settings.php';
             //die($query);
             return $query;
         }
+
+        public function AddFood($name)
+        {
+            $query = 'INSERT INTO `food` ( `name` ) values("'.$name.'")';
+            return mysql_query($query);
+        }
     }
 ?>
