@@ -9,13 +9,17 @@ class KittiesHandler
         $this->dalc = new KittiesDalc();
     }
 
-    public function GetKitties($order,$name, $startDate, $endDate, $breed)
+    public function GetKitties($order=null,$name=null, $startDate=null, $endDate=null, $breed=null)
     {
         $kitties = $this->dalc->SelectKitties($order,$name, $startDate, $endDate, $breed);
         for ($i = 0; $i < count($kitties); $i++) {
             $colors = $this->dalc->SelectColorsForKitty($kitties[$i]['id']);
             $colorsString = join(',', $colors);
             $kitties[$i]['colors'] = $colorsString;
+
+            $food = $this->dalc->SelectFoodForKitty($kitties[$i]['id']);
+            $foodString = join(',', $food);
+            $kitties[$i]['food'] = $foodString;
         }
         return $kitties;
     }
@@ -87,6 +91,16 @@ class KittiesHandler
     {
         return $this->dalc->AddFood($name);
     }
+
+    public function GetFood()
+    {
+        return $this->dalc->SelectFood();
+    }
+
+    public function AddKittyFood($id, $food)
+    {
+        return $this->dalc->AddKittyFood($id, $food);
+    }
 }
 
 if (isset($_POST['addKitty'])) {
@@ -99,6 +113,10 @@ if (isset($_POST['addKitty'])) {
     $id = $handler->AddKitty($name, $birthDate, (int)$sex, (int)$breed, (int)$toilet);
     foreach ($_POST['color'] as $key => $value) {
         $handler->AddKittyColor($id, $value);
+
+    }
+    foreach ($_POST['food'] as $key => $value) {
+        $handler->AddKittyFood($id, $value);
 
     }
 

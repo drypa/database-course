@@ -32,6 +32,7 @@ if (count($result) <= 0) {
         <th>Sex</th>
         <th>Toilet trained</th>
         <th>Colors</th>
+        <th>Food</th>
         <th>Actions</th>
     </tr>
     </thead>
@@ -52,6 +53,8 @@ if (count($result) <= 0) {
                 . ($row['toilet_trained'] == '1' ? 'Trained' : 'Not trained =(')
                 . '</td><td>'
                 . $row['colors']
+                . '</td><td>'
+                . $row['food']
                 . '</td><td>'
                 . '<form method="POST" action=kitties_handler.php><input type="hidden" name="kittyId" value="' . $row['id'] .
                 '" /><input type="submit" name="delKitty" value="To adopt" /></form> <a href="edit_kitty.php?id='.$row['id'].'">Edit</a>'
@@ -103,6 +106,17 @@ if (count($result) <= 0) {
                         foreach ($colors as $el) {
                             echo '<label><input type="checkbox" name="color[]" value=" '. $el['id'] . '" />'. $el['name'].'</label>';
                         }
+                    ?>
+                </td>
+            </tr>
+            <tr>
+                <td><label>Food</label></td>
+                <td>
+                    <?php
+                    $colors = $handler->GetFood();
+                    foreach ($colors as $el) {
+                        echo '<label><input type="checkbox" name="food[]" value=" '. $el['id'] . '" />'. $el['name'].'</label>';
+                    }
                     ?>
                 </td>
             </tr>

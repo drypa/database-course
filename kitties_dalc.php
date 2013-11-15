@@ -196,13 +196,56 @@ require_once 'settings.php';
             if($order){
                 $query.=(' order by '.$order);
             }
-            //die($query);
             return $query;
         }
 
         public function AddFood($name)
         {
             $query = 'INSERT INTO `food` ( `name` ) values("'.$name.'")';
+            return mysql_query($query);
+        }
+
+        public function SelectFoodForKitty($id)
+        {
+            $query = 'SELECT f.name FROM `kitties` as k
+                        join `kitties_food` as kf
+                        on k.id = kf.kitty_id
+                        join `food` as f
+                        on f.id = kf.food_id
+                        where k.id= '.$id;
+            $result = mysql_query($query);
+            if(!$result){
+                die(mysql_error());
+            }
+            $colors = array();
+            while($row = mysql_fetch_array($result)){
+                if($row['name']){
+                    array_push($colors,$row['name']);
+                }
+            }
+            mysql_free_result($result);
+            return $colors;
+        }
+
+        public function SelectFood()
+        {
+            $query = 'SELECT id,name from `food`';
+            $result = mysql_query($query);
+            if(!$result){
+                die(mysql_error());
+            }
+            $colors = array();
+            while($row = mysql_fetch_array($result)){
+                array_push($colors,$row);
+            }
+            mysql_free_result($result);
+            return $colors;
+        }
+
+        public function AddKittyFood($id, $food)
+        {
+            $query = 'INSERT INTO `kitties_food` (`kitty_id`, `food_id`) SELECT '.$id.', '.$food.'
+            FROM dual WHERE not exists (SELECT * FROM `kitties_food` WHERE `kitty_id` = '.$id.' AND `food_id` = '.$food.' )';
             return mysql_query($query);
         }
     }
