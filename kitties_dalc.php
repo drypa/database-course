@@ -106,11 +106,6 @@ require_once 'settings.php';
             return $colors;
         }
 
-
-        public function AddBreed($name){
-            $query = 'INSERT INTO `breeds` ( `name` ) values("'.$name.'")';
-            return mysql_query($query);
-        }
         public function SelectBreeds(){
              $result = mysql_query('select * from breeds',$this->connection);
              if(!$result){
@@ -121,7 +116,6 @@ require_once 'settings.php';
                 array_push($breeds,$row);
              }
 
-             //var_dump($result);
             mysql_free_result($result);
              return $breeds;
         }
@@ -129,9 +123,22 @@ require_once 'settings.php';
             mysql_close($this->connection);
         }
 
+        public function AddBreed($name){
+            return $this->AddEntity('breeds',$name);
+        }
+
         public function AddColor($name)
         {
-            $query = 'INSERT INTO `colors` ( `name` ) values("'.$name.'")';
+            return $this->AddEntity('colors',$name);
+        }
+
+        public function AddFood($name)
+        {
+            return $this->AddEntity('food',$name);
+        }
+
+        private function AddEntity($entity,$name){
+            $query = 'INSERT INTO `'.$entity.'` ( `name` ) values("'.$name.'")';
             return mysql_query($query);
         }
 
@@ -197,12 +204,6 @@ require_once 'settings.php';
                 $query.=(' order by '.$order);
             }
             return $query;
-        }
-
-        public function AddFood($name)
-        {
-            $query = 'INSERT INTO `food` ( `name` ) values("'.$name.'")';
-            return mysql_query($query);
         }
 
         public function SelectFoodForKitty($id)
