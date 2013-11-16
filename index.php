@@ -40,13 +40,19 @@ if (count($result) <= 0) {
     <tbody>
         <?php
         $people = $handler->GetPeople();
-            function GetPeopleOptions($people){
-                $res='';
+            function GetPeopleOptions($people,$human_id){
+                $res='<option value="0" >-</option>';
                 foreach($people as $human){
-                    $res.='<option value="'.$human['id'].'">'.$human['name'].'</option>';
+                    if($human_id && $human['id']== $human_id){
+                        $res.='<option  selected value="'.$human['id'].'">'.$human['name'].'</option>';
+                    }else{
+                        $res.='<option value="'.$human['id'].'">'.$human['name'].'</option>';
+                    }
+
                 }
                 return $res;
             }
+
         foreach ($result as $row) {
             echo '<tr><td>'
                 . $row['id']
@@ -66,7 +72,7 @@ if (count($result) <= 0) {
                 . $row['food']
                 . '</td><td>'
                 . '<form method="POST" action=kitties_handler.php><input type="hidden" name="kittyId" value="' . $row['id']
-                . '"/><select name="person">'.GetPeopleOptions($people).'</select><input type="submit" name="adoptKitty" value="Adopt" /></form>'
+                . '"/><select name="person">'.GetPeopleOptions($people,$row['human_id']).'</select><input type="submit" name="adoptKitty" value="Adopt" /></form>'
                 . '</td><td>'
                 . '<form method="POST" action=kitties_handler.php><input type="hidden" name="kittyId" value="' . $row['id'] .
                 '" /><input type="submit" name="delKitty" value="Delete" />

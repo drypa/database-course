@@ -150,23 +150,41 @@ require_once 'settings.php';
                              k.birth_date,
                              k.sex,
                              k.toilet_trained,
-                             b.name as breed
+                             b.name as breed,
+                             p.name as human_name,
+                             p.id as human_id
                              FROM `kitties` AS k
                              INNER JOIN `breeds` AS b ON
                              b.id = k.breed_id
-                             WHERE  NOT EXISTS (SELECT id from `kitties_people` as kp where kp.kitty_id = k.id )
+                             LEFT JOIN `kitties_people` AS kp ON
+                             k.id = kp.kitty_id
+                             LEFT join `people` as p ON
+                             p.id = kp.human_id
                              ";
+            // WHERE  NOT EXISTS (SELECT id from `kitties_people` as kp where kp.kitty_id = k.id )
+            if($name || $startDate || $endDate || $breed){
+                $query.=' where ';
+            }
             if($name){
-                $query.=" and k.name like '%".$name."%'";
+                $query.=" k.name like '%".$name."%'";
             }
             if($startDate){
-                $query.=" and k.birth_date >= '".$startDate."'";
+                if($name){
+                    $query.=' and ';
+                }
+                $query.=" k.birth_date >= '".$startDate."'";
             }
             if($endDate){
-                $query.=" and k.birth_date <= '".$endDate."'";
+                if($name || $startDate){
+                    $query.=' and ';
+                }
+                $query.=" k.birth_date <= '".$endDate."'";
             }
             if($breed){
-                $query.=(' and b.id ='.$breed);
+                if($name || $startDate || $endDate){
+                    $query.=' and ';
+                }
+                $query.=(' b.id ='.$breed);
             }
 
             if($order){
@@ -237,6 +255,12 @@ require_once 'settings.php';
         {
             $query = 'INSERT INTO `kitties_people` (`kitty_id`, `human_id`) SELECT '.$id.', '.$human_id.'
             FROM dual WHERE not exists (SELECT id FROM `kitties_people` WHERE `kitty_id` = '.$id.' AND `human_id` = '.$human_id.' )';
+            return mysql_query($query);
+        }
+
+        public function DeleteAdoptKitty($id)
+        {
+            $query = 'DELETE FROM `kitties_people` WHERE `kitty_id` = '.$id;
             return mysql_query($query);
         }
     }

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost:3306
--- Время создания: Ноя 16 2013 г., 02:55
+-- Время создания: Ноя 16 2013 г., 04:27
 -- Версия сервера: 5.5.32
 -- Версия PHP: 5.4.20
 
@@ -217,15 +217,10 @@ CREATE TABLE IF NOT EXISTS `kitties_people` (
   `kitty_id` int(11) NOT NULL,
   `human_id` int(11) NOT NULL,
   `adopt_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=cp1251 AUTO_INCREMENT=2 ;
-
---
--- Дамп данных таблицы `kitties_people`
---
-
-INSERT INTO `kitties_people` (`id`, `kitty_id`, `human_id`, `adopt_date`) VALUES
-(1, 3, 1, '2013-11-16 10:45:32');
+  PRIMARY KEY (`id`),
+  KEY `human_id` (`human_id`),
+  KEY `kitty_id` (`kitty_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=cp1251 AUTO_INCREMENT=10 ;
 
 -- --------------------------------------------------------
 
@@ -271,6 +266,13 @@ ALTER TABLE `kitties_colors`
 ALTER TABLE `kitties_food`
   ADD CONSTRAINT `kitties_food_ibfk_1` FOREIGN KEY (`kitty_id`) REFERENCES `kitties` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `kitties_food_ibfk_2` FOREIGN KEY (`food_id`) REFERENCES `food` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `kitties_people`
+--
+ALTER TABLE `kitties_people`
+  ADD CONSTRAINT `kitties_people_ibfk_2` FOREIGN KEY (`kitty_id`) REFERENCES `kitties` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `kitties_people_ibfk_1` FOREIGN KEY (`human_id`) REFERENCES `people` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
