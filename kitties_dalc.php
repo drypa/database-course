@@ -10,7 +10,6 @@ require_once 'settings.php';
             mysql_select_db(Settings::$dbName,$this->connection);
 
             mysql_set_charset('utf8');
-            //mysql_query("SET NAMES 'utf8';");
         }
         public function SelectKitties($order='k.id',$name=null, $startDate=null, $endDate=null, $breed=null){
             $query = $this->BuildQueryToSearchKitty($order,$name,$startDate,$endDate,$breed);
@@ -93,31 +92,11 @@ require_once 'settings.php';
         }
 
         public function SelectColors(){
-            $query = 'SELECT id,name from `colors`';
-            $result = mysql_query($query);
-            if(!$result){
-                die(mysql_error());
-            }
-            $colors = array();
-            while($row = mysql_fetch_array($result)){
-                array_push($colors,$row);
-            }
-            mysql_free_result($result);
-            return $colors;
+            return $this->SelectEntity('colors');
         }
 
         public function SelectBreeds(){
-             $result = mysql_query('select * from breeds',$this->connection);
-             if(!$result){
-                die(mysql_error());
-            }
-              $breeds = array();
-            while($row = mysql_fetch_array($result)){
-                array_push($breeds,$row);
-             }
-
-            mysql_free_result($result);
-             return $breeds;
+            return $this->SelectEntity('breeds');
         }
         public function __destruct(){
             mysql_close($this->connection);
@@ -172,32 +151,22 @@ require_once 'settings.php';
                              k.sex,
                              k.toilet_trained,
                              b.name as breed
-                             FROM kitties AS k
-                             INNER JOIN breeds AS b ON
-                             b.id = k.breed_id";
-            if($name || $startDate || $endDate || $breed){
-                 $query.=' where ';
-            }
+                             FROM `kitties` AS k
+                             INNER JOIN `breeds` AS b ON
+                             b.id = k.breed_id
+                             WHERE  NOT EXISTS (SELECT id from `kitties_people` as kp where kp.kitty_id = k.id )
+                             ";
             if($name){
-                $query.=" k.name like '%".$name."%'";
+                $query.=" and k.name like '%".$name."%'";
             }
             if($startDate){
-                if($name){
-                    $query.=' and ';
-                }
-                $query.=" k.birth_date >= '".$startDate."'";
+                $query.=" and k.birth_date >= '".$startDate."'";
             }
             if($endDate){
-                if($name || $startDate){
-                    $query.=' and ';
-                }
-                $query.=" k.birth_date <= '".$endDate."'";
+                $query.=" and k.birth_date <= '".$endDate."'";
             }
             if($breed){
-                if($name || $startDate || $endDate){
-                    $query.=' and ';
-                }
-                $query.=(' b.id ='.$breed);
+                $query.=(' and b.id ='.$breed);
             }
 
             if($order){
@@ -230,17 +199,7 @@ require_once 'settings.php';
 
         public function SelectFood()
         {
-            $query = 'SELECT id,name from `food`';
-            $result = mysql_query($query);
-            if(!$result){
-                die(mysql_error());
-            }
-            $colors = array();
-            while($row = mysql_fetch_array($result)){
-                array_push($colors,$row);
-            }
-            mysql_free_result($result);
-            return $colors;
+            return $this->SelectEntity('food');
         }
 
         public function AddKittyFood($id, $food)
@@ -253,6 +212,31 @@ require_once 'settings.php';
         public function AddHuman($name, $address)
         {
             $query = "INSERT INTO `people` (`name`, `address`) VALUES ('".$name."','".$address."')";
+            return mysql_query($query);
+        }
+        private function SelectEntity($entity){
+            $query = 'SELECT id,name from `'.$entity.'`';
+            $result = mysql_query($query);
+            if(!$result){
+                die(mysql_error());
+            }
+            $arr = array();
+            while($row = mysql_fetch_array($result)){
+                array_push($arr,$row);
+            }
+            mysql_free_result($result);
+            return $arr;
+        }
+
+        public function SelectPeople()
+        {
+            return $this->SelectEntity('people');
+        }
+
+        public function AdoptKitty($id, $human_id)
+        {
+            $query = 'INSERT INTO `kitties_people` (`kitty_id`, `human_id`) SELECT '.$id.', '.$human_id.'
+            FROM dual WHERE not exists (SELECT id FROM `kitties_people` WHERE `kitty_id` = '.$id.' AND `human_id` = '.$human_id.' )';
             return mysql_query($query);
         }
     }

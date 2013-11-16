@@ -106,6 +106,16 @@ class KittiesHandler
     {
         return $this->dalc->AddHuman($name, $address);
     }
+
+    public function GetPeople()
+    {
+        return $this->dalc->SelectPeople();
+    }
+
+    public function AdoptKitty($id, $human_id)
+    {
+        return $this->dalc->AdoptKitty($id, $human_id);
+    }
 }
 
 if (isset($_POST['addKitty'])) {
@@ -160,6 +170,16 @@ if (isset($_POST['delKitty'])) {
     header("Location: index.php");
     return;
 }
+if (isset($_POST['adoptKitty'])) {
+    $handler = new KittiesHandler();
+    $id = $_POST['kittyId'];
+    $human_id = $_POST['person'];
+    $handler->AdoptKitty($id,$human_id);
+    $handler->__destruct();
+    header("Location: index.php");
+    return;
+}
+
 
 if (isset($_POST['addBreed'])) {
     $name = $_POST['breedName'];

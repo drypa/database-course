@@ -33,11 +33,20 @@ if (count($result) <= 0) {
         <th>Toilet trained</th>
         <th>Colors</th>
         <th>Food</th>
+        <th>Adopt</th>
         <th>Actions</th>
     </tr>
     </thead>
     <tbody>
         <?php
+        $people = $handler->GetPeople();
+            function GetPeopleOptions($people){
+                $res='';
+                foreach($people as $human){
+                    $res.='<option value="'.$human['id'].'">'.$human['name'].'</option>';
+                }
+                return $res;
+            }
         foreach ($result as $row) {
             echo '<tr><td>'
                 . $row['id']
@@ -56,8 +65,12 @@ if (count($result) <= 0) {
                 . '</td><td>'
                 . $row['food']
                 . '</td><td>'
+                . '<form method="POST" action=kitties_handler.php><input type="hidden" name="kittyId" value="' . $row['id']
+                . '"/><select name="person">'.GetPeopleOptions($people).'</select><input type="submit" name="adoptKitty" value="Adopt" /></form>'
+                . '</td><td>'
                 . '<form method="POST" action=kitties_handler.php><input type="hidden" name="kittyId" value="' . $row['id'] .
-                '" /><input type="submit" name="delKitty" value="To adopt" /></form> <a href="edit_kitty.php?id='.$row['id'].'">Edit</a>'
+                '" /><input type="submit" name="delKitty" value="Delete" />
+                    </form> <a href="edit_kitty.php?id='.$row['id'].'">Edit</a>'
                 . '</td></tr>';
         }
         ?>
