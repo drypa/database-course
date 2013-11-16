@@ -249,5 +249,11 @@ require_once 'settings.php';
             FROM dual WHERE not exists (SELECT * FROM `kitties_food` WHERE `kitty_id` = '.$id.' AND `food_id` = '.$food.' )';
             return mysql_query($query);
         }
+
+        public function AddHuman($name, $address)
+        {
+            $query = "INSERT INTO `people` (`name`, `address`) VALUES ('".$name."','".$address."')";
+            return mysql_query($query);
+        }
     }
 ?>

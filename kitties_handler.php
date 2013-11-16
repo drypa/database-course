@@ -101,6 +101,11 @@ class KittiesHandler
     {
         return $this->dalc->AddKittyFood($id, $food);
     }
+
+    public function AddHuman($name, $address)
+    {
+        return $this->dalc->AddHuman($name, $address);
+    }
 }
 
 if (isset($_POST['addKitty'])) {
@@ -174,6 +179,14 @@ if (isset($_POST['addFood'])) {
     $name = $_POST['foodName'];
     $handler = new KittiesHandler();
     $handler->AddFood($name);
+    header("Location: index.php");
+    return;
+}
+if (isset($_POST['addHuman'])) {
+    $name = $_POST['humanName'];
+    $address = $_POST['humanAddress'];
+    $handler = new KittiesHandler();
+    $handler->AddHuman($name,$address);
     header("Location: index.php");
     return;
 }
