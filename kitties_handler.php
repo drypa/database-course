@@ -121,6 +121,11 @@ class KittiesHandler
     {
         return $this->dalc->DeleteAdoptKitty($id);
     }
+
+    public function DeleteFoodForKitty($id)
+    {
+        return $this->dalc->DeleteFoodForKitty($id);
+    }
 }
 
 if (isset($_POST['addKitty'])) {
@@ -157,6 +162,11 @@ if (isset($_POST['updateKitty'])) {
     $handler->DeleteColorsForKitty($id);
     foreach ($_POST['color'] as $key => $value) {
         $handler->AddKittyColor($id, $value);
+
+    }
+    $handler->DeleteFoodForKitty($id);
+    foreach ($_POST['food'] as $key => $value) {
+        $handler->AddKittyFood($id, $value);
 
     }
 

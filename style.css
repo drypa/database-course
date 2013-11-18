@@ -16,3 +16,7 @@
 border: 1px dotted #aaa;
     margin-left: 10px;
 }
+.add-widget{
+    max-width: 350px;
+    display: inline-block;
+}

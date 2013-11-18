@@ -67,6 +67,18 @@ if(isset($_GET['id'])){
                 </td>
             </tr>
             <tr>
+                <td><label>Food</label></td>
+                <td>
+                    <?php
+                    $colors = $handler->GetFood();
+                    foreach ($colors as $el) {
+                        echo '<label><input type="checkbox" name="food[]" value=" '. $el['id'] . '" />'. $el['name'].'</label>';
+                    }
+                    ?>
+                </td>
+            </tr>
+
+            <tr>
                 <td><label>Toilet Trained</label></td>
                 <td><input type='checkbox' name='toilet' <?php echo($kitty['toilet_trained'] ==1 ? " checked='checked'": "" ); ?> /></td>
             </tr>

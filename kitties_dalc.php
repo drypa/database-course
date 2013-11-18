@@ -141,9 +141,26 @@ require_once 'settings.php';
 
         public function DeleteColorsForKitty($id)
         {
-            $query = 'DELETE FROM `kitties_colors` WHERE `kitty_id` = '.$id;
+            return $this->DeleteEntitiesForKitty('kitties_colors',$id);
+        }
+        public function DeleteAdoptKitty($id)
+        {
+            return $this->DeleteEntitiesForKitty('kitties_people',$id);
+        }
+
+        public function DeleteFoodForKitty($id)
+        {
+            return $this->DeleteEntitiesForKitty('kitties_food',$id);
+//            $query = 'DELETE FROM `kitties_food` WHERE `kitty_id` = '.$id;
+//            return mysql_query($query);
+        }
+
+        private function DeleteEntitiesForKitty($entity,$kitty_id){
+            $query = 'DELETE FROM `'.$entity.'` WHERE `kitty_id` = '.$kitty_id;
             return mysql_query($query);
         }
+
+
         private function BuildQueryToSearchKitty($order=null,$name=null, $startDate=null, $endDate=null, $breed=null){
             $query = " SELECT k.id,
                              k.name,
@@ -258,10 +275,5 @@ require_once 'settings.php';
             return mysql_query($query);
         }
 
-        public function DeleteAdoptKitty($id)
-        {
-            $query = 'DELETE FROM `kitties_people` WHERE `kitty_id` = '.$id;
-            return mysql_query($query);
-        }
     }
 ?>

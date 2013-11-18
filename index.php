@@ -152,7 +152,7 @@ if (count($result) <= 0) {
         </table>
     </form>
 </div>
-<div>
+<span class='add-widget'>
     <div>Add Breed</div>
     <form action='kitties_handler.php' method='POST'>
         <table>
@@ -168,8 +168,8 @@ if (count($result) <= 0) {
             </tbody>
         </table>
     </form>
-</div>
-<div>
+</span>
+<span class='add-widget'>
     <div>Add Color</div>
     <form action='kitties_handler.php' method='POST'>
         <table>
@@ -185,8 +185,8 @@ if (count($result) <= 0) {
             </tbody>
         </table>
     </form>
-</div>
-<div>
+</span>
+<span class='add-widget'>
     <div>Add Food</div>
     <form action='kitties_handler.php' method='POST'>
         <table>
@@ -202,8 +202,8 @@ if (count($result) <= 0) {
             </tbody>
         </table>
     </form>
-</div>
-<div>
+</span>
+<span class='add-widget'>
     <div>Add Human</div>
     <form action='kitties_handler.php' method='POST'>
         <table>
@@ -223,7 +223,7 @@ if (count($result) <= 0) {
             </tbody>
         </table>
     </form>
-</div>
+</span>
 </body>
 </html>
 <?php
