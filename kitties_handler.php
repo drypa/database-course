@@ -83,9 +83,6 @@ class KittiesHandler
     {
         return $this->dalc->DeleteColorsForKitty($id);
     }
-    public function SearchKitty($name,$startDate,$endDate,$breed,$order){
-        return $this->dalc->SearchKitty($name,$startDate,$endDate,$breed,$order);
-    }
 
     public function AddFood($name)
     {
@@ -115,11 +112,6 @@ class KittiesHandler
     public function AdoptKitty($id, $human_id)
     {
         return $this->dalc->AdoptKitty($id, $human_id);
-    }
-
-    public function DelAdoptKitty($id)
-    {
-        return $this->dalc->DeleteAdoptKitty($id);
     }
 
     public function DeleteFoodForKitty($id)
@@ -185,12 +177,13 @@ if (isset($_POST['delKitty'])) {
     header("Location: index.php");
     return;
 }
+
 if (isset($_POST['adoptKitty'])) {
     $handler = new KittiesHandler();
     $id = $_POST['kittyId'];
     $human_id = $_POST['person'];
     if($human_id == 0){
-        $handler->DelAdoptKitty($id);
+        $handler->AdoptKitty($id,'NULL');
     }else{
         $handler->AdoptKitty($id,$human_id);
     }

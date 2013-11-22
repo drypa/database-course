@@ -143,16 +143,9 @@ require_once 'settings.php';
         {
             return $this->DeleteEntitiesForKitty('kitties_colors',$id);
         }
-        public function DeleteAdoptKitty($id)
-        {
-            return $this->DeleteEntitiesForKitty('kitties_people',$id);
-        }
-
         public function DeleteFoodForKitty($id)
         {
             return $this->DeleteEntitiesForKitty('kitties_food',$id);
-//            $query = 'DELETE FROM `kitties_food` WHERE `kitty_id` = '.$id;
-//            return mysql_query($query);
         }
 
         private function DeleteEntitiesForKitty($entity,$kitty_id){
@@ -173,12 +166,9 @@ require_once 'settings.php';
                              FROM `kitties` AS k
                              INNER JOIN `breeds` AS b ON
                              b.id = k.breed_id
-                             LEFT JOIN `kitties_people` AS kp ON
-                             k.id = kp.kitty_id
                              LEFT join `people` as p ON
-                             p.id = kp.human_id
+                             p.id = k.human_id
                              ";
-            // WHERE  NOT EXISTS (SELECT id from `kitties_people` as kp where kp.kitty_id = k.id )
             if($name || $startDate || $endDate || $breed){
                 $query.=' where ';
             }
@@ -270,8 +260,7 @@ require_once 'settings.php';
 
         public function AdoptKitty($id, $human_id)
         {
-            $query = 'INSERT INTO `kitties_people` (`kitty_id`, `human_id`) SELECT '.$id.', '.$human_id.'
-            FROM dual WHERE not exists (SELECT id FROM `kitties_people` WHERE `kitty_id` = '.$id.' AND `human_id` = '.$human_id.' )';
+            $query = "UPDATE `kitties` set `human_id` = ".$human_id." where `id`=".$id;
             return mysql_query($query);
         }
 
