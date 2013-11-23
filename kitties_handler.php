@@ -99,9 +99,9 @@ class KittiesHandler
         return $this->dalc->AddKittyFood($id, $food);
     }
 
-    public function AddHuman($name, $address)
+    public function AddHuman($doc,$name,$sur, $address)
     {
-        return $this->dalc->AddHuman($name, $address);
+        return $this->dalc->AddHuman($doc,$name, $sur,$address);
     }
 
     public function GetPeople()
@@ -183,7 +183,7 @@ if (isset($_POST['adoptKitty'])) {
     $id = $_POST['kittyId'];
     $human_id = $_POST['person'];
     if($human_id == 0){
-        $handler->AdoptKitty($id,'NULL');
+        $handler->AdoptKitty($id,null);
     }else{
         $handler->AdoptKitty($id,$human_id);
     }
@@ -216,10 +216,12 @@ if (isset($_POST['addFood'])) {
     return;
 }
 if (isset($_POST['addHuman'])) {
+    $doc = $_POST['humanDocument'];
     $name = $_POST['humanName'];
+    $sur = $_POST['humanSurName'];
     $address = $_POST['humanAddress'];
     $handler = new KittiesHandler();
-    $handler->AddHuman($name,$address);
+    $handler->AddHuman($doc,$name,$sur,$address);
     header("Location: index.php");
     return;
 }

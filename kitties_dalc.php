@@ -162,12 +162,12 @@ require_once 'settings.php';
                              k.toilet_trained,
                              b.name as breed,
                              p.name as human_name,
-                             p.id as human_id
+                             p.document_number as human_id
                              FROM `kitties` AS k
                              INNER JOIN `breeds` AS b ON
                              b.id = k.breed_id
                              LEFT join `people` as p ON
-                             p.id = k.human_id
+                             p.document_number = k.human_id
                              ";
             if($name || $startDate || $endDate || $breed){
                 $query.=' where ';
@@ -234,9 +234,9 @@ require_once 'settings.php';
             return mysql_query($query);
         }
 
-        public function AddHuman($name, $address)
+        public function AddHuman($doc,$name,$sur, $address)
         {
-            $query = "INSERT INTO `people` (`name`, `address`) VALUES ('".$name."','".$address."')";
+            $query = "INSERT INTO `people` (`document_number`,`name`, `surname`,`address`) VALUES ('".$doc."','".$name."','".$sur."','".$address."')";
             return mysql_query($query);
         }
         private function SelectEntity($entity){
@@ -255,12 +255,26 @@ require_once 'settings.php';
 
         public function SelectPeople()
         {
-            return $this->SelectEntity('people');
+            $query = 'SELECT document_number,name,surname from `people`';
+            $result = mysql_query($query);
+            if(!$result){
+                die(mysql_error());
+            }
+            $arr = array();
+            while($row = mysql_fetch_array($result)){
+                array_push($arr,$row);
+            }
+            mysql_free_result($result);
+            return $arr;
         }
 
         public function AdoptKitty($id, $human_id)
         {
-            $query = "UPDATE `kitties` set `human_id` = ".$human_id." where `id`=".$id;
+            if($human_id == null){
+                $query = "UPDATE `kitties` set `human_id` = null where `id`=".$id;
+            }else{
+                $query = "UPDATE `kitties` set `human_id` = '".$human_id."' where `id`=".$id;
+            }
             return mysql_query($query);
         }
 

@@ -16,6 +16,7 @@ require_once 'kitties_handler.php';
 $handler = new KittiesHandler();
 
 $result = $handler->GetKitties();
+
 if (count($result) <= 0) {
     ?>
 <div>No kitties found</div>
@@ -43,10 +44,10 @@ if (count($result) <= 0) {
             function GetPeopleOptions($people,$human_id){
                 $res='<option value="0" >-</option>';
                 foreach($people as $human){
-                    if($human_id && $human['id']== $human_id){
-                        $res.='<option  selected value="'.$human['id'].'">'.$human['name'].'</option>';
+                    if($human_id && $human['document_number']== $human_id){
+                        $res.='<option  selected value="'.$human['document_number'].'">'.$human['name'].' '.$human['surname'].'</option>';
                     }else{
-                        $res.='<option value="'.$human['id'].'">'.$human['name'].'</option>';
+                        $res.='<option value="'.$human['document_number'].'">'.$human['name'].' '.$human['surname'].'</option>';
                     }
 
                 }
@@ -209,8 +210,16 @@ if (count($result) <= 0) {
         <table>
             <tbody>
             <tr>
+                <td><label>Document number</label></td>
+                <td><input type='text' name='humanDocument'/></td>
+            </tr>
+            <tr>
                 <td><label>Name</label></td>
                 <td><input type='text' name='humanName'/></td>
+            </tr>
+            <tr>
+                <td><label>Surname</label></td>
+                <td><input type='text' name='humanSurName'/></td>
             </tr>
             <tr>
                 <td><label>Address</label></td>
