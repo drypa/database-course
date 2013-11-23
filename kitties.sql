@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost:3306
--- Время создания: Ноя 22 2013 г., 10:25
+-- Время создания: Ноя 23 2013 г., 01:34
 -- Версия сервера: 5.5.32
 -- Версия PHP: 5.4.20
 
@@ -122,7 +122,7 @@ CREATE TABLE IF NOT EXISTS `kitties` (
   `birth_date` date NOT NULL,
   `toilet_trained` bit(1) NOT NULL,
   `sex` bit(1) NOT NULL,
-  `human_id` int(11) DEFAULT NULL,
+  `human_id` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `breed_id` (`breed_id`),
   KEY `adoption_id` (`human_id`)
@@ -137,11 +137,11 @@ INSERT INTO `kitties` (`id`, `name`, `breed_id`, `birth_date`, `toilet_trained`,
 (3, 'Борис', 1, '2013-08-01', b'0', b'0', NULL),
 (5, 'Кыся', 2, '2010-10-20', b'0', b'1', NULL),
 (9, 'Мартын', 5, '2010-10-20', b'1', b'1', NULL),
-(19, 'Кыся123', 1, '2010-10-20', b'0', b'0', 1),
+(19, 'Кыся123', 1, '2010-10-20', b'0', b'0', '1234 5050'),
 (21, 'Страшила', 6, '2010-10-20', b'0', b'1', NULL),
 (23, 'qqqqq', 6, '2010-10-20', b'0', b'1', NULL),
 (26, 'Страшила', 6, '2010-10-20', b'1', b'0', NULL),
-(27, 'Кыся123', 1, '2010-10-20', b'0', b'0', NULL),
+(27, 'Кыся123', 1, '2010-10-20', b'0', b'0', '1'),
 (28, 'ййй', 2, '2013-09-04', b'1', b'0', NULL);
 
 -- --------------------------------------------------------
@@ -218,19 +218,23 @@ INSERT INTO `kitties_food` (`id`, `kitty_id`, `food_id`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `people` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `document_number` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
+  `surname` varchar(255) NOT NULL,
   `address` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=cp1251 AUTO_INCREMENT=3 ;
+  PRIMARY KEY (`document_number`),
+  KEY `document_number` (`document_number`)
+) ENGINE=InnoDB DEFAULT CHARSET=cp1251;
 
 --
 -- Дамп данных таблицы `people`
 --
 
-INSERT INTO `people` (`id`, `name`, `address`) VALUES
-(1, 'Иван', 'Спб'),
-(2, 'Марья', 'Москва');
+INSERT INTO `people` (`document_number`, `name`, `surname`, `address`) VALUES
+('1', 'Иван', '', 'Спб'),
+('1111 0000', 'Дмитрий', 'Дмитриев', 'Дмитров ул. Ленина д.1'),
+('1234 5050', 'петр', 'петров', 'Столица'),
+('2', 'Марья', '', 'Москва');
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
@@ -240,6 +244,7 @@ INSERT INTO `people` (`id`, `name`, `address`) VALUES
 -- Ограничения внешнего ключа таблицы `kitties`
 --
 ALTER TABLE `kitties`
+  ADD CONSTRAINT `kitties_ibfk_2` FOREIGN KEY (`human_id`) REFERENCES `people` (`document_number`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `kitties_ibfk_1` FOREIGN KEY (`breed_id`) REFERENCES `breeds` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
