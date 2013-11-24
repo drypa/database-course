@@ -278,5 +278,11 @@ require_once 'settings.php';
             return mysql_query($query);
         }
 
+        public function DeleteColor($id)
+        {
+            $query = "DELETE from `colors` where `id`=$id";
+            return mysql_query($query);
+        }
+
     }
 ?>

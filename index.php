@@ -8,6 +8,7 @@
 <h1>Hello Kitty</h1>
 <ul>
     <li><a href='search_kitty.php'>Search</a></li>
+    <li><a href='colors.php'>Colors</a></li>
 </ul>
 <?php
 error_reporting(-1);

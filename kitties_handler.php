@@ -118,6 +118,11 @@ class KittiesHandler
     {
         return $this->dalc->DeleteFoodForKitty($id);
     }
+
+    public function DeleteColor($id)
+    {
+        return $this->dalc->DeleteColor($id);
+    }
 }
 
 if (isset($_POST['addKitty'])) {
@@ -222,6 +227,15 @@ if (isset($_POST['addHuman'])) {
     $address = $_POST['humanAddress'];
     $handler = new KittiesHandler();
     $handler->AddHuman($doc,$name,$sur,$address);
+    header("Location: index.php");
+    return;
+}
+
+if (isset($_POST['delColor'])) {
+    $handler = new KittiesHandler();
+    $id = $_POST['id'];
+    $handler->DeleteColor($id);
+    $handler->__destruct();
     header("Location: index.php");
     return;
 }
