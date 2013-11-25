@@ -26,6 +26,7 @@
     <li><a href='colors.php'>Colors</a></li>
     <li><a href='breeds.php'>Breeds</a></li>
     <li><a href='people.php'>People</a></li>
+    <li><a href='food.php'>Food</a></li>
 </ul>
 <?php
 error_reporting(-1);

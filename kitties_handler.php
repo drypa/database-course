@@ -131,6 +131,11 @@ class KittiesHandler
     {
         return $this->dalc->DeleteHuman($id);
     }
+    public function DeleteFood($id)
+    {
+        return $this->dalc->DeleteFood($id);
+    }
+
 
 }
 
@@ -256,6 +261,15 @@ if (isset($_POST['delBreed'])) {
     header("Location: index.php?res=$res");
     return;
 }
+if (isset($_POST['delFood'])) {
+    $handler = new KittiesHandler();
+    $id = $_POST['id'];
+    $res = $handler->DeleteFood($id);
+    $handler->__destruct();
+    header("Location: index.php?res=$res");
+    return;
+}
+
 if (isset($_POST['delHuman'])) {
     $handler = new KittiesHandler();
     $id = $_POST['id'];
