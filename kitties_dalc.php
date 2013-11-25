@@ -290,6 +290,9 @@ require_once 'settings.php';
         {
             return $this->DeleteEntity('breeds',$id);
         }
-
+        public function DeleteHuman($id){
+            $query = "DELETE from `people` where `document_number`='$id'";
+            return mysql_query($query);
+        }
     }
 ?>
