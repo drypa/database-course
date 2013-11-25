@@ -277,11 +277,18 @@ require_once 'settings.php';
             }
             return mysql_query($query);
         }
+        private function DeleteEntity($entity,$id){
+            $query = "DELETE from `$entity` where `id`=$id";
+            return mysql_query($query);
+        }
 
         public function DeleteColor($id)
         {
-            $query = "DELETE from `colors` where `id`=$id";
-            return mysql_query($query);
+            return $this->DeleteEntity('colors',$id);
+        }
+        public function DeleteBreed($id)
+        {
+            return $this->DeleteEntity('breeds',$id);
         }
 
     }

@@ -9,6 +9,7 @@
 <ul>
     <li><a href='search_kitty.php'>Search</a></li>
     <li><a href='colors.php'>Colors</a></li>
+    <li><a href='breeds.php'>Breeds</a></li>
 </ul>
 <?php
 error_reporting(-1);

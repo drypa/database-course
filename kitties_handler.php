@@ -123,6 +123,10 @@ class KittiesHandler
     {
         return $this->dalc->DeleteColor($id);
     }
+    public function DeleteBreed($id)
+    {
+        return $this->dalc->DeleteBreed($id);
+    }
 }
 
 if (isset($_POST['addKitty'])) {
@@ -239,4 +243,13 @@ if (isset($_POST['delColor'])) {
     header("Location: index.php");
     return;
 }
+if (isset($_POST['delBreed'])) {
+    $handler = new KittiesHandler();
+    $id = $_POST['id'];
+    $handler->DeleteBreed($id);
+    $handler->__destruct();
+    header("Location: index.php");
+    return;
+}
+
 ?>
