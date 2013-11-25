@@ -243,25 +243,25 @@ if (isset($_POST['addHuman'])) {
 if (isset($_POST['delColor'])) {
     $handler = new KittiesHandler();
     $id = $_POST['id'];
-    $handler->DeleteColor($id);
+    $res = $handler->DeleteColor($id);
     $handler->__destruct();
-    header("Location: index.php");
+    header("Location: index.php?res=$res");
     return;
 }
 if (isset($_POST['delBreed'])) {
     $handler = new KittiesHandler();
     $id = $_POST['id'];
-    $handler->DeleteBreed($id);
+    $res = $handler->DeleteBreed($id);
     $handler->__destruct();
-    header("Location: index.php");
+    header("Location: index.php?res=$res");
     return;
 }
 if (isset($_POST['delHuman'])) {
     $handler = new KittiesHandler();
     $id = $_POST['id'];
-    $handler->DeleteHuman($id);
+    $res = $handler->DeleteHuman($id);
     $handler->__destruct();
-    header("Location: index.php");
+    header("Location: index.php?res=$res");
     return;
 }
 

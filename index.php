@@ -4,6 +4,21 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel='stylesheet' href='style.css' type='text/css'/>
 </head>
+<script type="text/javascript" >
+    <?php
+    if(isset($_GET['res'])){
+        if($_GET['res']>0){
+            echo("alert('успешно');");
+
+        }else{
+            echo("alert('не удалось');");
+        }
+        $_GET['res'] = '';
+        echo("window.location.search = ''");
+    }
+    ?>
+</script>
+
 <body>
 <h1>Hello Kitty</h1>
 <ul>
