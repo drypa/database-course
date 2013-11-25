@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost:3306
--- Время создания: Ноя 23 2013 г., 01:34
+-- Время создания: Ноя 25 2013 г., 08:43
 -- Версия сервера: 5.5.32
 -- Версия PHP: 5.4.20
 
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `breeds` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=cp1251 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=cp1251 AUTO_INCREMENT=9 ;
 
 --
 -- Дамп данных таблицы `breeds`
@@ -56,7 +56,6 @@ INSERT INTO `breeds` (`id`, `name`) VALUES
 (1, 'Скоттиш-страйт (шотландская прямоухая кошка)'),
 (2, 'Мейн-кун'),
 (5, 'Дворовый кот'),
-(6, 'кот баскервилей'),
 (7, 'Абиссинская');
 
 -- --------------------------------------------------------
@@ -76,9 +75,7 @@ CREATE TABLE IF NOT EXISTS `colors` (
 --
 
 INSERT INTO `colors` (`id`, `name`) VALUES
-(1, 'белый'),
 (2, 'голубой'),
-(3, 'чёрный'),
 (4, 'полосатый'),
 (5, 'шоколад'),
 (6, 'серо-буро-малиновый'),
@@ -126,7 +123,7 @@ CREATE TABLE IF NOT EXISTS `kitties` (
   PRIMARY KEY (`id`),
   KEY `breed_id` (`breed_id`),
   KEY `adoption_id` (`human_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=cp1251 AUTO_INCREMENT=29 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=cp1251 AUTO_INCREMENT=30 ;
 
 --
 -- Дамп данных таблицы `kitties`
@@ -138,9 +135,6 @@ INSERT INTO `kitties` (`id`, `name`, `breed_id`, `birth_date`, `toilet_trained`,
 (5, 'Кыся', 2, '2010-10-20', b'0', b'1', NULL),
 (9, 'Мартын', 5, '2010-10-20', b'1', b'1', NULL),
 (19, 'Кыся123', 1, '2010-10-20', b'0', b'0', '1234 5050'),
-(21, 'Страшила', 6, '2010-10-20', b'0', b'1', NULL),
-(23, 'qqqqq', 6, '2010-10-20', b'0', b'1', NULL),
-(26, 'Страшила', 6, '2010-10-20', b'1', b'0', NULL),
 (27, 'Кыся123', 1, '2010-10-20', b'0', b'0', '1'),
 (28, 'ййй', 2, '2013-09-04', b'1', b'0', NULL);
 
@@ -157,33 +151,28 @@ CREATE TABLE IF NOT EXISTS `kitties_colors` (
   PRIMARY KEY (`id`),
   KEY `kitty_id` (`kitty_id`),
   KEY `color_id` (`color_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=cp1251 AUTO_INCREMENT=46 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=cp1251 AUTO_INCREMENT=50 ;
 
 --
 -- Дамп данных таблицы `kitties_colors`
 --
 
 INSERT INTO `kitties_colors` (`id`, `kitty_id`, `color_id`) VALUES
-(16, 19, 1),
 (17, 19, 2),
-(18, 19, 3),
 (19, 19, 4),
 (20, 19, 5),
 (21, 19, 6),
-(26, 26, 7),
-(27, 27, 1),
 (28, 27, 2),
-(29, 27, 3),
 (30, 27, 4),
 (31, 27, 5),
 (32, 27, 6),
 (33, 27, 7),
 (34, 27, 8),
-(41, 2, 1),
 (42, 2, 4),
 (43, 2, 7),
 (44, 2, 8),
-(45, 28, 1);
+(46, 28, 2),
+(48, 28, 4);
 
 -- --------------------------------------------------------
 
@@ -198,15 +187,13 @@ CREATE TABLE IF NOT EXISTS `kitties_food` (
   PRIMARY KEY (`id`),
   KEY `kitty_id` (`kitty_id`),
   KEY `food_id` (`food_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=cp1251 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=cp1251 AUTO_INCREMENT=7 ;
 
 --
 -- Дамп данных таблицы `kitties_food`
 --
 
 INSERT INTO `kitties_food` (`id`, `kitty_id`, `food_id`) VALUES
-(1, 28, 1),
-(2, 28, 2),
 (3, 3, 2),
 (4, 9, 1),
 (5, 9, 4);
@@ -244,8 +231,8 @@ INSERT INTO `people` (`document_number`, `name`, `surname`, `address`) VALUES
 -- Ограничения внешнего ключа таблицы `kitties`
 --
 ALTER TABLE `kitties`
-  ADD CONSTRAINT `kitties_ibfk_2` FOREIGN KEY (`human_id`) REFERENCES `people` (`document_number`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `kitties_ibfk_1` FOREIGN KEY (`breed_id`) REFERENCES `breeds` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `kitties_ibfk_2` FOREIGN KEY (`human_id`) REFERENCES `people` (`document_number`) ON DELETE SET NULL ON UPDATE SET NULL,
+  ADD CONSTRAINT `kitties_ibfk_1` FOREIGN KEY (`breed_id`) REFERENCES `breeds` (`id`);
 
 --
 -- Ограничения внешнего ключа таблицы `kitties_colors`
